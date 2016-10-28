@@ -81,11 +81,10 @@ class XMLGenerator extends ValidationRules implements XMLGeneratorInterface {
 
         self::$DOCUMENT_PAIN_MODE = $documentPainMode;
 
-		$this->document = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<Document
-	xmlns=\"urn:iso:std:iso:20022:tech:xsd:{$documentPainMode}\"
-	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-	xsi:schemaLocation=\"urn:iso:std:iso:20022:tech:xsd:{$documentPainMode} {$documentPainMode}.xsd\">
+		$this->document = "<?xml version = \"1.0\" encoding = \"UTF-8\"?>
+<Document 
+	xmlns = \"urn:iso:std:iso:20022:tech:xsd:{$documentPainMode}\" 
+	xmlns:xsi = \"http://www.w3.org/2001/XMLSchema-instance\">
 </Document>";
 
 		return $this;
