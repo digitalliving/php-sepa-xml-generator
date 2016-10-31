@@ -874,8 +874,10 @@ interface PaymentInfoInterface {
 
 
             //Once we have taken care of all the transactions, we can update the total number of transactions and the control sum
-            $paymentInfo->NbOfTxs = $this->getNumberOfTransactions();
-            $paymentInfo->CtrlSum = $this->getControlSum();
+            if ( !$this->getCreditTransferTransactionObjects() ) {
+	            $paymentInfo->NbOfTxs = $this->getNumberOfTransactions();
+	            $paymentInfo->CtrlSum = $this->getControlSum();
+	        }
 
 
 			return $paymentInfo;
