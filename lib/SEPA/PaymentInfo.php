@@ -218,6 +218,12 @@ interface PaymentInfoInterface {
 		 */
 		private $localInstrumentCode = self::LOCAL_INSTRUMENT_CODE;
 
+		/**
+		 * Specifies the bank party id.
+		 * @var string
+		 */
+		private $bankPartyId = '';
+
 
 		public function __construct() {}
 
@@ -643,6 +649,27 @@ interface PaymentInfoInterface {
 		}
 
 		/**
+		 * Set bank party id.
+		 * @param $bankPartyId The bank party id.
+		 * @return $this
+		 */
+		public function setBankPartyId($bankPartyId) {
+
+			$this->bankPartyId = $bankPartyId;
+
+			return $this;
+		}
+
+		/**
+		 * Get the bank party id.
+		 * @return string
+		 */
+		public function getBankPartyId() {
+
+			return $this->bankPartyId;
+		}
+
+		/**
 		 * Payment info Direct Debit Transactions Object
 		 * @param $directDebitTransactionObject DirectDebitTransaction
 		 * @throws \Exception
@@ -985,6 +1012,10 @@ interface PaymentInfoInterface {
         public function addDebitorFieldsToXml(\SimpleXMLElement $paymentInfo) {
             $debitor = $paymentInfo->addChild('Dbtr');
             $debitor->addChild('Nm', $this->getDebitorName());
+
+            if ($this->getBankPartyId() !== '') {
+            	$debitor->addChild('Id')->addChild('OrgId')->addChild('BkPtyId', $this->getBankPartyId());
+            }
 
             $debitorAccount = $paymentInfo->addChild('DbtrAcct');
             $debitorAccountID = $debitorAccount->addChild('Id');
