@@ -282,7 +282,7 @@ class CreditTransferTransaction extends PaymentInfo implements TransactionInterf
                 ->addChild('Strd')
                 ->addChild('CdtrRefInf');
             $creditReferenceInformation->addChild('CdtrRefTp')->addChild('Cd', 'SCOR');
-            $creditReferenceInformation->addChild('CdtrRef', $this->getFinnishReferenceNumber())
+            $creditReferenceInformation->addChild('CdtrRef', $this->getFinnishReferenceNumber());
         }
 
         return $creditTransferTransactionInformation;
