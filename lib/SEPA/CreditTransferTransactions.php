@@ -58,6 +58,8 @@ class CreditTransferTransaction extends PaymentInfo implements TransactionInterf
      */
     private $creditInvoice = '';
 
+    private $finnishReferenceNumber = '';
+
 
     /**
      * Creditor Name
@@ -170,7 +172,6 @@ class CreditTransferTransaction extends PaymentInfo implements TransactionInterf
         return $this->creditInvoice;
     }
 
-
     /**
      * Credit Invoice
      * @param $invoice
@@ -183,6 +184,24 @@ class CreditTransferTransaction extends PaymentInfo implements TransactionInterf
             throw new \Exception(ERROR_MSG_DD_INVOICE_NUMBER . $this->getInstructionIdentification());
         }
         $this->creditInvoice = $invoice;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFinnishReferenceNumber() {
+        return $this->finnishReferenceNumber;
+    }
+
+    /**
+     * Finnish Reference Number
+     * @param $invoice
+     * @return $this
+     * @throws \Exception
+     */
+    public function setFinnishReferenceNumber($referenceNumber) {
+        $this->finnishReferenceNumber = $referenceNumber;
         return $this;
     }
 
@@ -258,7 +277,13 @@ class CreditTransferTransaction extends PaymentInfo implements TransactionInterf
 		if ( $this->getCreditInvoice() ) {
 			$creditTransferTransactionInformation->addChild('RmtInf')
 				->addChild('Ustrd', $this->getCreditInvoice());
-		}
+		} else if ($this->getFinnishReferenceNumber()) {
+            $creditReferenceInformation = $creditTransferTransactionInformation->addChild('RmtInf')
+                ->addChild('Strd')
+                ->addChild('CdtrRefInf');
+            $creditReferenceInformation->addChild('CdtrRefTp')->addChild('Cd', 'SCOR');
+            $creditReferenceInformation->addChild('CdtrRef', $this->getFinnishReferenceNumber())
+        }
 
         return $creditTransferTransactionInformation;
 
