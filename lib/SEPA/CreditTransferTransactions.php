@@ -201,6 +201,7 @@ class CreditTransferTransaction extends PaymentInfo implements TransactionInterf
      * @throws \Exception
      */
     public function setFinnishReferenceNumber($referenceNumber) {
+        $referenceNumber = $this->removeSpaces($referenceNumber);
         $this->finnishReferenceNumber = $referenceNumber;
         return $this;
     }
